@@ -21,6 +21,11 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaPinterestP } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import BillCard from "./CheckOut/BillCard";
+import { useEffect } from "react";
+import { total } from "../store/reducers/cartSlice";
+import { cartFilter } from "../store/reducers/productsSlice";
+import { addSearchWords } from "../store/reducers/searchSlice";
+import { BsCaretDownFill } from "react-icons/bs";
 
 const Nav = ({ style }) => {
   const NavMenu = [
@@ -33,9 +38,14 @@ const Nav = ({ style }) => {
     "Demos",
   ];
 
-  const something = useSelector((state) => state.productCard);
+  const cartItems = useSelector((state) => state.cart);
+  const searchWords = useSelector((state) => state.search.searchWords);
 
-  // (something);
+  const [selectedName, setSelectedName] = useState("All Category");
+
+  console.log(searchWords);
+
+  const dispatch = useDispatch();
 
   const scrollPosition = useScrollPosition();
 
@@ -53,11 +63,18 @@ const Nav = ({ style }) => {
     return classes.filter(Boolean).join(" ");
   }
 
+  const handleFilter = (thing) => {
+    dispatch(cartFilter(thing));
+    setSelectedName(thing);
+  };
+
   // (scrollPosition);
 
   const state = useSelector((state) => state.count);
 
-  const firstPrice = useSelector((state) => state.first.value);
+  useEffect(() => {
+    dispatch(total());
+  }, [cartItems]);
 
   return (
     <>
@@ -74,16 +91,11 @@ const Nav = ({ style }) => {
             Boomarag
           </a>
         </div>
-        <ul
-          className={classNames(
-            scrollPosition > 0 ? "pt-7" : "pt-7",
-            "lg:flex hidden justify-between items-stretch pt-7 w-[45%]  gap-6 uppercase text-[0.75rem] font-[600]"
-          )}
-        >
+        <ul className="md:flex hidden justify-between items-stretch w-[45%]  gap-6 uppercase text-[0.75rem] font-[600]">
           <li
             className={classNames(
               scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
+              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500 pt-7"
             )}
           >
             <NavLink
@@ -94,92 +106,76 @@ const Nav = ({ style }) => {
               Home
             </NavLink>
           </li>
-          <li
-            className={classNames(
-              scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
-            )}
-          >
-            <NavLink
-              to="/about"
-              className="flex items-center"
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              Pages
-            </NavLink>
+          <li className="flex items-center py-0">
+            <div className="dropdown py-0">
+              <label
+                tabIndex={0}
+                className="btn m-1 text-[0.78rem] bg-white text-black hover:text-white gap-x-2"
+              >
+                {selectedName}
+                <BsCaretDownFill />
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a
+                    className="text-white"
+                    onClick={() => handleFilter("all category")}
+                  >
+                    All Category
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-white"
+                    onClick={() => handleFilter("men's clothing")}
+                  >
+                    men's clothing
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-white"
+                    onClick={() => handleFilter("jewelery")}
+                  >
+                    jewelery
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-white"
+                    onClick={() => handleFilter("electronics")}
+                  >
+                    electronics
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-white"
+                    onClick={() => handleFilter("women's clothing")}
+                  >
+                    women's clothing
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
-          <li
-            className={classNames(
-              scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
-            )}
-          >
-            <NavLink
-              to="/portfolio"
-              className="flex items-center"
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              Porfolio
-            </NavLink>
-          </li>
-          <li
-            className={classNames(
-              scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
-            )}
-          >
-            <NavLink
-              to="/blog"
-              className="flex items-center"
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              Blog
-            </NavLink>
-          </li>
-          <li
-            className={classNames(
-              scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
-            )}
-          >
-            <NavLink
-              to="/shop"
-              className="flex items-center"
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              Shop
-            </NavLink>
-          </li>
-          <li
-            className={classNames(
-              scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
-            )}
-          >
-            <NavLink
-              to="/checkout"
-              className="flex items-center"
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              CheckOut
-            </NavLink>
-          </li>
-          <li
-            className={classNames(
-              scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
-            )}
-          >
-            <NavLink to="" className="flex items-center">
-              Demos
-            </NavLink>
+          <li className="flex items-center w-[40%]">
+            <input
+              type="text"
+              className="w-full outline-none border border-black rounded-lg bg-white py-3 px-3"
+              onChange={(e) => dispatch(addSearchWords(e.target.value))}
+              placeholder="Type and Search"
+            />
           </li>
         </ul>
         <div className="flex w-[20%] justify-end items-center gap-6 pl-6 border-l border-l-lightWhite">
           <div className="text-xl cursor-pointer relative" onClick={handleNav}>
             <AiOutlineShoppingCart />
             <div className="absolute -top-1 -left-1 bg-indigo-500 rounded-full text-[.5rem] leading-[10px] font-[600] w-[80%] h-[80%] flex justify-center items-center">
-              {state.value}
+              {cartItems.cartQuantityTotal}
             </div>
           </div>
           <div className="text-xl cursor-pointer">
@@ -203,10 +199,10 @@ const Nav = ({ style }) => {
         <div className="w-full h-full overflow-hidden">
           <div className="w-full h-full px-[20px] pt-[30px] scrollY overflow-y-scroll">
             <div className="flex justify-between">
-              <div className="flex gap-3 justify-between items-center">
+              <div className="flex gap-3 justify-between items-center text-black">
                 <AiOutlineShoppingCart />
                 <p className="font-bold">Shop Cart</p>
-                <div>{state.value}</div>
+                <div>{cartItems.cartQuantityTotal}</div>
               </div>
               <TiDeleteOutline
                 className="text-2xl text-black cursor-pointer"
@@ -214,16 +210,16 @@ const Nav = ({ style }) => {
               />
             </div>
             <div className="w-full mt-[40px] mb-[90px] space-y-[50px]">
-              {something?.map((card) => (
+              {cartItems?.cartItems?.map((card) => (
                 <BillCard card={card} />
               ))}
             </div>
           </div>
         </div>
         <div className="w-[200px] lg:w-[400px] fixed bottom-0 shadow-lg z-20 bg-white px-[20px]">
-          <div className="flex justify-between items-center py-2">
+          <div className="flex justify-between items-center py-2 text-black">
             <div className="font-bold">Total</div>
-            <div className="font-bold">${Math.round(firstPrice)}</div>
+            <div className="font-bold">${cartItems.cartPriceTotal}</div>
           </div>
           <div className="w-full text-center rounded-md text-white bg-sky-400 py-2 mb-2">
             Check Out

@@ -1,18 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import finalPrice from './reducers/finalPrice'
-import firstPrice from './reducers/firstPrice'
-import productCardSlice from './reducers/productCardSlice'
-import totalCountSlice from './reducers/totalCountSlice'
+import cartSlice from './reducers/cartSlice'
+import productsSlice from './reducers/productsSlice'
+import searchSlice from './reducers/searchSlice'
 import fetchData from './service/fetchData'
-
 
 const store = configureStore({
   reducer: {
     [fetchData.reducerPath]: fetchData.reducer,
-    productCard: productCardSlice,
-    count: totalCountSlice,
-    first: firstPrice,
-    final: finalPrice
+    cart: cartSlice,
+    products: productsSlice,
+    search: searchSlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fetchData.middleware),
 })
