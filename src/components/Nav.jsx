@@ -219,7 +219,9 @@ const Nav = ({ style }) => {
         <div className="w-[200px] lg:w-[400px] fixed bottom-0 shadow-lg z-20 bg-white px-[20px]">
           <div className="flex justify-between items-center py-2 text-black">
             <div className="font-bold">Total</div>
-            <div className="font-bold">${cartItems.cartPriceTotal}</div>
+            <div className="font-bold">
+              ${cartItems.cartPriceTotal.toFixed(2)}
+            </div>
           </div>
           <div className="w-full text-center rounded-md text-white bg-sky-400 py-2 mb-2">
             Check Out
