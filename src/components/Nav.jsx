@@ -91,11 +91,11 @@ const Nav = ({ style }) => {
             Boomarag
           </a>
         </div>
-        <ul className="md:flex hidden justify-between items-stretch w-[45%]  gap-6 uppercase text-[0.75rem] font-[600]">
+        <ul className="flex justify-between items-stretch w-[45%]  gap-6 uppercase text-[0.75rem] font-[600]">
           <li
             className={classNames(
               scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500 pt-7"
+              "md:flex hidden relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500 pt-7"
             )}
           >
             <NavLink
