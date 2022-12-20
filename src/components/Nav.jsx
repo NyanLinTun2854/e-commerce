@@ -26,6 +26,7 @@ import { total } from "../store/reducers/cartSlice";
 import { cartFilter } from "../store/reducers/productsSlice";
 import { addSearchWords } from "../store/reducers/searchSlice";
 import { BsCaretDownFill } from "react-icons/bs";
+import debounce from "lodash.debounce";
 
 const Nav = ({ style }) => {
   const NavMenu = [
@@ -217,7 +218,10 @@ const Nav = ({ style }) => {
             <input
               type="text"
               className="w-full outline-none border border-black rounded-lg bg-white py-3 px-3"
-              onChange={(e) => dispatch(addSearchWords(e.target.value))}
+              onChange={debounce(
+                (e) => dispatch(addSearchWords(e.target.value)),
+                1000
+              )}
               placeholder="Type and Search"
             />
           </li>
