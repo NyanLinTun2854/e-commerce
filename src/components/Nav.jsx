@@ -40,6 +40,7 @@ const Nav = ({ style }) => {
 
   const cartItems = useSelector((state) => state.cart);
   const searchWords = useSelector((state) => state.search.searchWords);
+  const [showCat, setShowCat] = useState(false);
 
   const [selectedName, setSelectedName] = useState("All Category");
 
@@ -62,6 +63,10 @@ const Nav = ({ style }) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+  const onShowCatHandler = () => {
+    setShowCat((pre) => !pre);
+  };
 
   const handleFilter = (thing) => {
     dispatch(cartFilter(thing));
@@ -87,15 +92,15 @@ const Nav = ({ style }) => {
         )}
       >
         <div className="flex items-center w-[20%]">
-          <a href="#" className="text-[1.25rem] font-[600]">
+          <NavLink to="/" className="text-[1.25rem] font-[600]">
             Boomarag
-          </a>
+          </NavLink>
         </div>
         <ul className="flex justify-between items-stretch w-[45%]  gap-6 uppercase text-[0.75rem] font-[600]">
           <li
             className={classNames(
               scrollPosition > 0 ? "after:bg-black" : "after:bg-black",
-              "md:flex hidden relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500 pt-7"
+              "md:flex hidden relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:scale-x-[30%] hover:after:scale-x-[1] after:duration-500"
             )}
           >
             <NavLink
@@ -106,16 +111,16 @@ const Nav = ({ style }) => {
               Home
             </NavLink>
           </li>
-          <li className="flex items-center py-0">
-            <div className="dropdown py-0">
+          <li className="hidden md:flex items-center py-0">
+            {/* < className="dropdown py-0">
               <label
                 tabIndex={0}
                 className="btn m-1 text-[0.78rem] bg-white text-black hover:text-white gap-x-2"
               >
                 {selectedName}
                 <BsCaretDownFill />
-              </label>
-              <ul
+              </label> */}
+            {/* <ul
                 tabIndex={0}
                 className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
               >
@@ -159,10 +164,56 @@ const Nav = ({ style }) => {
                     women's clothing
                   </a>
                 </li>
-              </ul>
+              </ul> */}
+            <div className="w-[100%]">
+              <button
+                className="relative w-full py-4 rounded-lg border border-black text-[14px] flex justify-center items-center gap-2"
+                onClick={onShowCatHandler}
+              >
+                All Category
+                <BsCaretDownFill />
+              </button>
+              <div
+                className={
+                  showCat
+                    ? "scale-y-1 w-22 sm:w-44 h-auto absolute rounded-lg border border-black bg-white origin-top duration-500"
+                    : "scale-y-0 w-22 sm:w-44 h-auto absolute rounded-lg border border-black bg-white origin-top duration-500"
+                }
+              >
+                <div
+                  className="flex justify-center items-center py-2 cursor-pointer duration-300 hover:bg-slate-200"
+                  onClick={() => handleFilter("all category")}
+                >
+                  ALL CATEGORY
+                </div>
+                <div
+                  className="flex justify-center items-center py-2 cursor-pointer duration-300 hover:bg-slate-200"
+                  onClick={() => handleFilter("men's clothing")}
+                >
+                  MEN'S CLOTHING
+                </div>
+                <div
+                  className="flex justify-center items-center py-2 cursor-pointer duration-300 hover:bg-slate-200"
+                  onClick={() => handleFilter("jewelery")}
+                >
+                  JEWELERY
+                </div>
+                <div
+                  className="flex justify-center items-center py-2 uppercase cursor-pointer duration-300 hover:bg-slate-200"
+                  onClick={() => handleFilter("electronics")}
+                >
+                  electronics
+                </div>
+                <div
+                  className="flex justify-center items-center py-2 uppercase cursor-pointer duration-300 hover:bg-slate-200"
+                  onClick={() => handleFilter("women's clothing")}
+                >
+                  women's clothing
+                </div>
+              </div>
             </div>
           </li>
-          <li className="flex items-center w-[40%]">
+          <li className="hidden md:flex items-center w-[40%]">
             <input
               type="text"
               className="w-full outline-none border border-black rounded-lg bg-white py-3 px-3"

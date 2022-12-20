@@ -73,16 +73,16 @@ const ProductCard = ({ data }) => {
   return (
     <div className="w-full">
       <div className="w-full min-h-[180px] mx-auto flex justify-start items-center">
-        <div className="w-[40%] h-[180px] md:h-[125px]">
+        <div className="max-w-[40%] h-[180px] md:h-[125px]">
           <img src={data.image} className="w-full h-full object-fill" alt="" />
         </div>
       </div>
       <div>
         <h1 className="font-bold pt-2 pb-3 text-black">
-          {data.title.slice(0, 20)}
+          {data.title.slice(0, 20)}...
         </h1>
         <p className="text-sm text-[#788487]">
-          {data.description.slice(0, 90)}
+          {data.description.slice(0, 90)}...
         </p>
         <div className="flex justify-between items-center text-sm py-4">
           <div className="flex gap-2 text-black">

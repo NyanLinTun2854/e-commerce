@@ -63,11 +63,11 @@ const BillCard = ({ card }) => {
 
   return (
     <div className="border border-slate-300 rounded-md space-y-2 px-2 py-2 relative">
-      <div className="absolute w-[50px] h-[57px] -top-10 left-6 lg:left-10">
+      <div className="absolute max-w-[120px] h-[57px] -top-10 left-6 lg:left-10 mb-4">
         <img src={card.image} className="w-full h-full object-cover" alt="" />
       </div>
       <div className="flex justify-between items-center">
-        <div className="w-[70%] text-black">{card.title}</div>
+        <div className="w-[70%] text-black">{card.title.slice(0, 20)}...</div>
         <button
           className="px-1 py-1 rounded-sm duration-300 hover:bg-red-500 hover:text-white text-black"
           onClick={() => handleDelete(card)}
